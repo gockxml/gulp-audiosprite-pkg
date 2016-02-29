@@ -35,6 +35,9 @@ function setup(options, defaults) {
 module.exports = function transformAudioSprite(options, defaults) {
   var audio = new AudioSprite(options = setup(options, defaults)), count;
   function input(file, encoding, callback) {
+    if (options.silence){
+      audio.inputSilence(options.silence, function(){});
+    }
     audio.input(file, configure(file, options), function() {callback()})
   }
   function output(callback, file) {
