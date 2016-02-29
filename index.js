@@ -42,10 +42,14 @@ module.exports = function transformAudioSprite(options, defaults) {
   }
   function output(callback, file) {
     if(options.json !== false) {
+      var json = audio.outputJson(options.json);
       this.push(new Vinyl({
         path: options.name.replace(path.extname(options.name), '.json'),
-        contents: new Buffer(JSON.stringify(audio.outputJson(options.json)))
+        contents: new Buffer(JSON.stringify(json))
       }))
+      if (options.outputJSON){
+        options.outputJSON(json);
+      }
     }
     function files(format) {
       var config = {
